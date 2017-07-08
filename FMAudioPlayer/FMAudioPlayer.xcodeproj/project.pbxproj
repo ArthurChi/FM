@@ -13,6 +13,7 @@
 		2ACD41701F10A079009CDBF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ACD416F1F10A079009CDBF3 /* Assets.xcassets */; };
 		2ACD41731F10A079009CDBF3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2ACD41711F10A079009CDBF3 /* LaunchScreen.storyboard */; };
 		2ACD417E1F10A079009CDBF3 /* FMAudioPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACD417D1F10A079009CDBF3 /* FMAudioPlayerTests.swift */; };
+		2ACD418B1F10B790009CDBF3 /* FMPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACD418A1F10B790009CDBF3 /* FMPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		2ACD41791F10A079009CDBF3 /* FMAudioPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FMAudioPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ACD417D1F10A079009CDBF3 /* FMAudioPlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMAudioPlayerTests.swift; sourceTree = "<group>"; };
 		2ACD417F1F10A079009CDBF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2ACD418A1F10B790009CDBF3 /* FMPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		2ACD41671F10A079009CDBF3 /* FMAudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				2ACD41891F10B73F009CDBF3 /* Classes */,
 				2ACD41681F10A079009CDBF3 /* AppDelegate.swift */,
 				2ACD416A1F10A079009CDBF3 /* ViewController.swift */,
 				2ACD416C1F10A079009CDBF3 /* Main.storyboard */,
@@ -94,6 +97,14 @@
 				2ACD417F1F10A079009CDBF3 /* Info.plist */,
 			);
 			path = FMAudioPlayerTests;
+			sourceTree = "<group>";
+		};
+		2ACD41891F10B73F009CDBF3 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2ACD418A1F10B790009CDBF3 /* FMPlayer.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +210,7 @@
 			files = (
 				2ACD416B1F10A079009CDBF3 /* ViewController.swift in Sources */,
 				2ACD41691F10A079009CDBF3 /* AppDelegate.swift in Sources */,
+				2ACD418B1F10B790009CDBF3 /* FMPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
