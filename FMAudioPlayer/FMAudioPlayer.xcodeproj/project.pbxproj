@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2A56B6C01F111A0800F7F791 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A56B6BF1F111A0800F7F791 /* URL+Extension.swift */; };
+		2A5A5A3B1F120DFD000B45DA /* FMAudioDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A5A3A1F120DFD000B45DA /* FMAudioDownloader.swift */; };
+		2AC41D861F11C1B500282B7F /* FMAudioFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC41D851F11C1B500282B7F /* FMAudioFileManager.swift */; };
+		2AC41D881F11CE2800282B7F /* FMResourceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC41D871F11CE2800282B7F /* FMResourceLoader.swift */; };
 		2ACD41691F10A079009CDBF3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACD41681F10A079009CDBF3 /* AppDelegate.swift */; };
 		2ACD416B1F10A079009CDBF3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACD416A1F10A079009CDBF3 /* ViewController.swift */; };
 		2ACD416E1F10A079009CDBF3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2ACD416C1F10A079009CDBF3 /* Main.storyboard */; };
@@ -29,6 +32,9 @@
 
 /* Begin PBXFileReference section */
 		2A56B6BF1F111A0800F7F791 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
+		2A5A5A3A1F120DFD000B45DA /* FMAudioDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMAudioDownloader.swift; sourceTree = "<group>"; };
+		2AC41D851F11C1B500282B7F /* FMAudioFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMAudioFileManager.swift; sourceTree = "<group>"; };
+		2AC41D871F11CE2800282B7F /* FMResourceLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMResourceLoader.swift; sourceTree = "<group>"; };
 		2ACD41651F10A079009CDBF3 /* FMAudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FMAudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ACD41681F10A079009CDBF3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2ACD416A1F10A079009CDBF3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +128,9 @@
 			children = (
 				2A56B6BD1F1119E100F7F791 /* General */,
 				2ACD418A1F10B790009CDBF3 /* FMPlayer.swift */,
+				2AC41D851F11C1B500282B7F /* FMAudioFileManager.swift */,
+				2AC41D871F11CE2800282B7F /* FMResourceLoader.swift */,
+				2A5A5A3A1F120DFD000B45DA /* FMAudioDownloader.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -228,10 +237,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AC41D881F11CE2800282B7F /* FMResourceLoader.swift in Sources */,
+				2A5A5A3B1F120DFD000B45DA /* FMAudioDownloader.swift in Sources */,
 				2ACD416B1F10A079009CDBF3 /* ViewController.swift in Sources */,
 				2A56B6C01F111A0800F7F791 /* URL+Extension.swift in Sources */,
 				2ACD41691F10A079009CDBF3 /* AppDelegate.swift in Sources */,
 				2ACD418B1F10B790009CDBF3 /* FMPlayer.swift in Sources */,
+				2AC41D861F11C1B500282B7F /* FMAudioFileManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

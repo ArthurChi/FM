@@ -13,6 +13,7 @@ final class FMPlayer: NSObject {
     
     static var shareInstance = FMPlayer()
     fileprivate var player: AVPlayer?
+    lazy var resourceLoader = FMResourceLoader()
     var status: PlayerStatus = .unknow
     
     fileprivate override init() {
@@ -32,7 +33,7 @@ final class FMPlayer: NSObject {
         let musicUrl = URL.init(safeString: urlStr)
         let playAsset = AVURLAsset.init(url: musicUrl.streamURL())
         
-        playAsset.resourceLoader.setDelegate(self, queue: DispatchQueue.main)
+        playAsset.resourceLoader.setDelegate(resourceLoader, queue: DispatchQueue.main)
         
         let playItem = AVPlayerItem(asset: playAsset)
         playItem.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: NSKeyValueObservingOptions.new, context: nil)
@@ -189,21 +190,5 @@ final class FMPlayer: NSObject {
         case pause
         case stop
         case failue
-    }
-}
-
-extension FMPlayer: AVAssetResourceLoaderDelegate {
-    
-    public func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource loadingRequest: AVAssetResourceLoadingRequest) -> Bool {
-        
-        print(loadingRequest)
-        self.status = .loading
-        
-        return true
-    }
-    
-    public func resourceLoader(_ resourceLoader: AVAssetResourceLoader, didCancel loadingRequest: AVAssetResourceLoadingRequest) {
-        
-        print("cancel")
     }
 }
