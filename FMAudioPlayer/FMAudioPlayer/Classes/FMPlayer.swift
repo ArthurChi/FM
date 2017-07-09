@@ -51,6 +51,7 @@ final class FMPlayer: NSObject {
                     print("准备好播放, 这时候播放没问题")
                 } else {
                     print("没有准备好")
+                    self.status = .failue
                 }
             }
         } else if keyPath == #keyPath(AVPlayerItem.isPlaybackLikelyToKeepUp) {
@@ -59,6 +60,7 @@ final class FMPlayer: NSObject {
                     print("当前资源, 准备的已经足够播放了")
                 } else {
                     print("资源不够")
+                    self.status = .failue
                 }
             }
         }
@@ -91,14 +93,17 @@ final class FMPlayer: NSObject {
     
     // MARK: - input functions
     func play() {
+        self.status = .playing
         self.player?.play()
     }
     
     func pause() {
+        self.status = .pause
         self.player?.pause()
     }
     
     func stop() {
+        self.status = .stop
         self.pause()
         self.player = nil
     }
@@ -150,13 +155,33 @@ final class FMPlayer: NSObject {
                 }
             }
         }
-        
-        
     }
     
     // MARK: - 输出接口
+    func totalTimeFormat() -> String {
+        let result = String(format: "%02zd分%02zd秒", totalSec / 60, totalSec.truncatingRemainder(dividingBy: 60))
+        return result
+    }
     
+    func currentTimeFormat() -> String {
+        let result = String(format: "%02zd分%02zd秒", currentSec / 60, currentSec.truncatingRemainder(dividingBy: 60))
+        return result
+    }
     
+    func mute() -> Bool {
+        return player?.isMuted ?? false
+    }
+    
+    func procress() -> Float {
+        if totalSec == 0 { return 0 }
+        return Float(currentSec / totalSec)
+    }
+    
+    func volume() -> Float {
+        return player?.volume ?? 0
+    }
+    
+    // MARK: - 状态
     enum PlayerStatus {
         case unknow
         case loading
@@ -172,6 +197,7 @@ extension FMPlayer: AVAssetResourceLoaderDelegate {
     public func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource loadingRequest: AVAssetResourceLoadingRequest) -> Bool {
         
         print(loadingRequest)
+        self.status = .loading
         
         return true
     }
