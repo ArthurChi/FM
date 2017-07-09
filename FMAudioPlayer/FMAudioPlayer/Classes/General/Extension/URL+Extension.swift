@@ -31,7 +31,6 @@ extension URL {
         components?.scheme = changedSceme
         
         if let url = components?.url {
-            print(url.absoluteString)
             return url
         } else {
             fatalError()

@@ -13,6 +13,7 @@ final class FMPlayer: NSObject {
     
     static var shareInstance = FMPlayer()
     fileprivate var player: AVPlayer?
+    var status: PlayerStatus = .unknow
     
     fileprivate override init() {
         super.init()
@@ -20,6 +21,14 @@ final class FMPlayer: NSObject {
     
     @discardableResult
     func load(with urlStr: String) -> FMPlayer {
+        
+        if let player = player {
+            if let playItem = player.currentItem {
+                playItem.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
+                playItem.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.isPlaybackLikelyToKeepUp))
+            }
+        }
+        
         let musicUrl = URL.init(safeString: urlStr)
         let playAsset = AVURLAsset.init(url: musicUrl.streamURL())
         
@@ -55,6 +64,31 @@ final class FMPlayer: NSObject {
         }
     }
     
+    var totalSec: TimeInterval {
+        if let player = player {
+            if let currentItem = player.currentItem {
+                
+                let totalTime = currentItem.duration
+                if !totalTime.flags.contains(.valid) {
+                    return CMTimeGetSeconds(totalTime)
+                }
+            }
+        }
+        
+        return 0
+    }
+    
+    var currentSec: TimeInterval {
+        if let player = player {
+            if let currentItem = player.currentItem {
+                let currentTime = currentItem.currentTime()
+                return CMTimeGetSeconds(currentTime)
+            }
+        }
+        
+        return 0
+    }
+    
     // MARK: - input functions
     func play() {
         self.player?.play()
@@ -83,27 +117,54 @@ final class FMPlayer: NSObject {
     
     func setProgress(progress: Float) {
         
+        if progress < 0 || progress > 1 { return }
+        
+        let toPlaySec = TimeInterval(progress) * totalSec
+        
+        seekToPlaySec(time: toPlaySec)
+    }
+    
+    func setSeekDiff(timeDiff: TimeInterval) {
+        
+        let toPlaySec = timeDiff + currentSec
+        
+        if toPlaySec < 0 || toPlaySec > totalSec { return }
+        
+        seekToPlaySec(time: toPlaySec)
+    }
+    
+    private func seekToPlaySec(time: TimeInterval) {
+        
         if let player = player {
-            if let currentItem = player.currentItem {
-                
-                let totalTime = currentItem.duration
-                let totalSec = CMTimeGetSeconds(totalTime)
-                let toPlaySec = progress * Float(totalSec)
-                let toPlayTime = CMTimeMake(Int64(toPlaySec), 1)
-                
-                player.seek(to: toPlayTime, completionHandler: { (finished) in
-                    if finished {
-                        print("确认加载")
-                    } else {
-                        print("取消加载")
-                    }
-                })
+            if let playItem = player.currentItem {
+                if playItem.status == .readyToPlay {
+                    
+                    let toPlayTime = CMTimeMake(Int64(time), 1)
+                    player.seek(to: toPlayTime, completionHandler: { (finished) in
+                        if finished {
+                            print("确认加载")
+                        } else {
+                            print("取消加载")
+                        }
+                    })
+                }
             }
         }
+        
+        
     }
     
     // MARK: - 输出接口
     
+    
+    enum PlayerStatus {
+        case unknow
+        case loading
+        case playing
+        case pause
+        case stop
+        case failue
+    }
 }
 
 extension FMPlayer: AVAssetResourceLoaderDelegate {
