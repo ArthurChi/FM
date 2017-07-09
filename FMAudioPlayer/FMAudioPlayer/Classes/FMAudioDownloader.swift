@@ -18,7 +18,7 @@ class FMAudioDownloader: NSObject {
     fileprivate var outputStream: OutputStream?
     
     func download(url: URL, offset: Int64) {
-        cancelAndClean()
+//        cancelAndClean()
         
         self.url = url
         var request = URLRequest(url: url)
@@ -42,12 +42,13 @@ extension FMAudioDownloader: URLSessionDataDelegate {
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
         
         if let rep = response as? HTTPURLResponse {
-            totalSize = response.expectedContentLength
             
-            let contentRageStr = "\(rep.allHeaderFields["Content-Range"] ?? "")"
+            if let contentLength = rep.allHeaderFields["Content-Length"] as? String {
+                totalSize = Int64(contentLength) ?? 0
+            }
             
-            if !contentRageStr.isEmpty {
-                totalSize = Int64(contentRageStr.components(separatedBy: "/").last ?? "") ?? 0
+            if let contentRageStr = rep.allHeaderFields["Content-Range"] as? String {
+                totalSize = Int64(contentRageStr) ?? 0
             }
         }
         

@@ -21,7 +21,7 @@ class FMResourceLoader: NSObject, AVAssetResourceLoaderDelegate {
         
         let url = loadingRequest.request.url
         
-        if FMAudioFileManager.cacheFileExists(url: url) {
+        if FMAudioFileManager.cacheFileExists(url: url?.httpURL()) {
             handleLoadingRequest(loadingRequest)
         } else if let url = url, downloader.loadedSize == 0 {
             
@@ -41,15 +41,15 @@ class FMResourceLoader: NSObject, AVAssetResourceLoaderDelegate {
     fileprivate func handleLoadingRequest(_ loadingRequest: AVAssetResourceLoadingRequest) {
         let url = loadingRequest.request.url
         loadingRequest.contentInformationRequest?.contentLength = FMAudioFileManager.cacheFileSize(url: url)
-        loadingRequest.contentInformationRequest?.contentType = FMAudioFileManager.contentType(url: url)
+        loadingRequest.contentInformationRequest?.contentType = "public.mp3"//FMAudioFileManager.contentType(url: url)
         loadingRequest.contentInformationRequest?.isByteRangeAccessSupported = true
         
         
         // TODO: 
-        let data = NSData.init(contentsOfFile: FMAudioFileManager.cacheFilePath(url: url))
-//        NSData.init(contentsOfFile: FMAudioFileManager.cacheFilePath(url: url), options: .mappedRead)
+//        let data = NSData.init(contentsOfFile: FMAudioFileManager.cacheFilePath(url: url))
+        let data = try? NSData.init(contentsOfFile: FMAudioFileManager.cacheFilePath(url: url), options: .mappedIfSafe)
         
-        guard let dataVaild = data, let dataRequestVaild = loadingRequest.dataRequest, dataVaild.length > 0, dataRequestVaild.requestedOffset > 0, dataRequestVaild.requestedLength > 0 else {
+        guard let dataVaild = data, let dataRequestVaild = loadingRequest.dataRequest, dataVaild.length > 0, dataRequestVaild.requestedOffset >= 0, dataRequestVaild.requestedLength > 0 else {
             return
         }
         

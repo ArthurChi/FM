@@ -56,7 +56,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let musicPath = "http://audio.xmcdn.com/group23/M04/63/C5/wKgJNFg2qdLCziiYAGQxcTOSBEw402.m4a"
+        let musicPath = "http://192.168.1.4:2000/swap.mp3"//"http://audio.xmcdn.com/group23/M04/63/C5/wKgJNFg2qdLCziiYAGQxcTOSBEw402.m4a"
         fmPlayer = FMPlayer.shareInstance.load(with: musicPath)
     }
 }

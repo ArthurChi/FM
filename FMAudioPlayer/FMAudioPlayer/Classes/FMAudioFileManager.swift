@@ -118,14 +118,15 @@ extension FMAudioFileManager {
     
     fileprivate static func fileSize(url: URL?, type: FileType) -> Int64 {
         guard let urlVaild = url else { return 0 }
-        guard cacheFileExists(url: url) else { return 0 }
         
         var rootPath: String
         
         switch type {
         case .cache:
+            guard cacheFileExists(url: url) else { return 0 }
             rootPath = cacheFilePath(url: urlVaild)
         case .tmp:
+            guard tmpFileExists(url: url) else { return 0 }
             rootPath = tmpFilePath(url: urlVaild)
         }
         
