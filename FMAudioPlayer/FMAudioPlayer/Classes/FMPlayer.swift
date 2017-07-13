@@ -68,17 +68,19 @@ final class FMPlayer: NSObject {
     }
     
     var totalSec: TimeInterval {
-        if let player = player {
-            if let currentItem = player.currentItem {
-                
-                let totalTime = currentItem.duration
-                if !totalTime.flags.contains(.valid) {
-                    return CMTimeGetSeconds(totalTime)
+        get {
+            if let player = player {
+                if let currentItem = player.currentItem {
+                    
+                    let totalTime = currentItem.duration
+                    if totalTime.flags.contains(.valid) {
+                        return CMTimeGetSeconds(totalTime)
+                    }
                 }
             }
+            
+            return 0
         }
-        
-        return 0
     }
     
     var currentSec: TimeInterval {

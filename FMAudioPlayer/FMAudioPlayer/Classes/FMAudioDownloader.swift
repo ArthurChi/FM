@@ -8,17 +8,28 @@
 
 import Foundation
 
+protocol FMAudioDownLoaderDelegate: class {
+    func downloading()
+}
+
 class FMAudioDownloader: NSObject {
     
-    fileprivate var totalSize: Int64 = 0
+    weak var delegate: FMAudioDownLoaderDelegate?
+    
     fileprivate var url: URL!
+    var totalSize: Int64 = 0
     var loadedSize: Int64 = 0
+    var requestOffset: Int64 = 0
+    var contentType: String?
     
     fileprivate lazy var session: URLSession? = URLSession.init(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
     fileprivate var outputStream: OutputStream?
     
     func download(url: URL, offset: Int64) {
-//        cancelAndClean()
+        
+        session?.getAllTasks(completionHandler: { $0.forEach { $0.cancel() } })
+        
+        requestOffset = offset
         
         self.url = url
         var request = URLRequest(url: url)
@@ -54,6 +65,7 @@ extension FMAudioDownloader: URLSessionDataDelegate {
         
         outputStream = OutputStream.init(toFileAtPath: FMAudioFileManager.tmpFilePath(url: self.url), append: true)
         outputStream?.open()
+        contentType = response.mimeType
         
         completionHandler(.allow)
     }
@@ -61,6 +73,8 @@ extension FMAudioDownloader: URLSessionDataDelegate {
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         loadedSize += data.count
         let _ = data.withUnsafeBytes { outputStream?.write($0, maxLength: data.count) }
+        
+        delegate?.downloading()
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
