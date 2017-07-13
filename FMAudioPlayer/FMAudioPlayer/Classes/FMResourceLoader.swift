@@ -41,7 +41,7 @@ class FMResourceLoader: NSObject, AVAssetResourceLoaderDelegate {
     fileprivate func handleLoadingRequest(_ loadingRequest: AVAssetResourceLoadingRequest) {
         let url = loadingRequest.request.url
         loadingRequest.contentInformationRequest?.contentLength = FMAudioFileManager.cacheFileSize(url: url)
-        loadingRequest.contentInformationRequest?.contentType = "public.mp3"//FMAudioFileManager.contentType(url: url)
+        loadingRequest.contentInformationRequest?.contentType = FMAudioFileManager.contentType(url: url)
         loadingRequest.contentInformationRequest?.isByteRangeAccessSupported = true
         
         

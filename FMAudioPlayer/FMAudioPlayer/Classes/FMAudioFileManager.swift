@@ -96,7 +96,12 @@ extension FMAudioFileManager { // file exist
             if cachePath.isEmpty {
                 return false
             } else {
-                return FileManager.default.fileExists(atPath: cacheFilePath(url: url))
+                
+                let isDir = UnsafeMutablePointer<ObjCBool>.allocate(capacity: 1)
+                let isExist = FileManager.default.fileExists(atPath: cacheFilePath(url: url), isDirectory: isDir)
+                
+                if isDir.pointee.boolValue { return false }
+                return isExist
             }
         case.tmp:
             break
